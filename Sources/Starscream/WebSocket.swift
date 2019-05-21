@@ -615,6 +615,9 @@ open class WebSocket : NSObject, StreamDelegate, WebSocketClient, WSStreamDelega
         var httpBody = "\(request.httpMethod ?? "GET") \(path) HTTP/1.1\r\n"
         if let headers = request.allHTTPHeaderFields {
             for (key, val) in headers {
+                if !["Origin", "Host", "Sec-WebSocket-Extensions"].contains(key) {
+                    continue
+                }
                 httpBody += "\(key): \(val)\r\n"
             }
         }
